@@ -1,12 +1,17 @@
 package com.krylovichVI.TestProject.controller;
 
-import com.krylovichVI.TestProject.domain.Person;
 import com.krylovichVI.TestProject.dto.PersonDTO;
 import com.krylovichVI.TestProject.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("person")
@@ -24,17 +29,13 @@ public class PersonController {
     }
 
     @GetMapping("{id}")
-    public PersonDTO getOnePerson(@PathVariable(name = "id") Person personId){
-        return personService.getPersonById(personId.getId());
+    public PersonDTO getOnePerson(@PathVariable(name = "id") Long personId){
+        return personService.getPersonById(personId);
     }
 
     @PostMapping
     public PersonDTO createPerson(@RequestBody PersonDTO person){
-        if(personService.isPersonByName(person.getName())){
-            return personService.updatePersonByName(person);
-        }else {
-            return personService.createPerson(person);
-        }
+        return personService.createPerson(person);
     }
 
     @PutMapping("{id}")

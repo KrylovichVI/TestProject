@@ -45,18 +45,10 @@ public class PersonService {
         return PersonMapper.INSTANCE.toDTO(personFromDB);
     }
 
-    public boolean isPersonByName(String name) {
-        if(personRepo.findByName(name).get() != null){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public PersonDTO updatePersonByName(PersonDTO personDTO) {
         Person personFromDb = personRepo.findByName(personDTO.getName()).get();
         Person entity = PersonMapper.INSTANCE.toEntity(personDTO);
-        personFromDb.setContacts(entity.getContacts());
+        personFromDb.getContacts().addAll(entity.getContacts());
         return PersonMapper.INSTANCE.toDTO(personRepo.save(personFromDb));
     }
 }
