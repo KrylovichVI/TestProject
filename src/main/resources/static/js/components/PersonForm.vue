@@ -1,20 +1,15 @@
 <template>
-    <div>
-        <input type="text" placeholder="Write name" v-model="name"/>
-        <input type="text" placeholder="Write phone" v-model="telephone"/>
-        <input type="button"  value="Save" @click="save"/>
-    </div>
+    <v-container>
+        <v-text-field label="Name" placeholder="Write name" v-model="name"/>
+        <v-text-field label="Phone" placeholder="Write phone" v-model="telephone"/>
+        <v-btn @click="save">
+            Save
+        </v-btn>
+    </v-container>
 </template>
 
 <script>
-    function getIndex(list, id) {
-        for(const i = 0; i < list.length; i++){
-            if(list[i].id === id){
-                return i
-            }
-            return -1
-        }
-    }
+    import personApi from 'api/persons.js'
 
     export default {
         name: "PersonForm",
@@ -35,26 +30,24 @@
 
         methods: {
             save() {
-                const person = { name: this.name};
+                const person = { id: this.id, name: this.name};
 
                 if(this.id){
-                    this.$resource('/person{/id}').update({id: this.id}, person).then(result =>
+                    personApi.update(person).then(result =>
                         result.json().then(data => {
-                            const index = getIndex(this.persons, data.id)
+                            const index = this.persons.findIndex(item => item.id === data.id)
                             this.persons.splice(index, 1, data)
-                            this.name = ''
-                            this.telephone = ''
-                            this.id = ''
                         })
                     )
                 } else{
-                    this.$resource('/person{/id}').save({}, person).then(result =>
+                    personApi.add(person).then(result =>
                         result.json().then(data => {
                             this.persons.push(data)
-                            this.telephone = ''
-                            this.name = ''
                         }))
                 }
+                this.name = ''
+                this.telephone = ''
+                this.id = ''
             }
         }
     }
