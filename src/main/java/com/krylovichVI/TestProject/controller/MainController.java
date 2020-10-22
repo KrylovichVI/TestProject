@@ -8,6 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller initializing start state front end
+ * @author Krylovich Vitaly
+ * @version 1.0
+ * */
 @Controller
 @RequestMapping("/")
 public class MainController {

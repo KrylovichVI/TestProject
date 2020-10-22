@@ -13,6 +13,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import java.util.Set;
 
+
+/**
+ * Person class of entity
+ * @author Krylovich Vitaly
+ * @version 1.0
+ * */
 @Entity
 @Table
 @Data
@@ -26,7 +32,7 @@ public class Person {
     @Column
     private String name;
 
-    @OneToMany( mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "person", orphanRemoval = true)
     private Set<Contacts> contacts;
 
 }

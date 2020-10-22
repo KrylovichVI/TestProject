@@ -17,20 +17,37 @@ public class PersonService {
         this.personRepo = personRepo;
     }
 
+    /**
+     * @param personId - id of
+     * @return dto person from id
+     */
     public PersonDTO getPersonById(Long personId) {
         return PersonMapper.INSTANCE.toDTO(personRepo.findById(personId).get());
     }
 
+    /**
+     * @return List of all personDto
+     */
     public List<PersonDTO> getAllPerson() {
         return PersonMapper.INSTANCE.toDTO(personRepo.findAll());
     }
 
+    /**
+     * Delete person by  person id
+     * @param personId - id in person entity
+     */
     public void deletePerson(Long personId){
         Person personFormDb = personRepo.findById(personId).get();
 
         personRepo.delete(personFormDb);
     }
 
+
+    /**
+     * Update old person to new except of id
+     * @param personOld - id in current person
+     * @param personNew - dto object of  new person
+     */
     public PersonDTO updatePerson(Long personOld, PersonDTO personNew) {
         PersonDTO personFromDB = PersonMapper.INSTANCE.toDTO(personRepo.findById(personOld).get());
         BeanUtils.copyProperties(personNew, personFromDB, "id");
@@ -39,16 +56,13 @@ public class PersonService {
         return PersonMapper.INSTANCE.toDTO(person);
     }
 
+    /**
+     * Create new Person of database
+     * @param person - dto object of  new person
+     */
     public PersonDTO createPerson(PersonDTO person) {
         Person personFromDB = personRepo.save(PersonMapper.INSTANCE.toEntity(person));
 
         return PersonMapper.INSTANCE.toDTO(personFromDB);
-    }
-
-    public PersonDTO updatePersonByName(PersonDTO personDTO) {
-        Person personFromDb = personRepo.findByName(personDTO.getName()).get();
-        Person entity = PersonMapper.INSTANCE.toEntity(personDTO);
-        personFromDb.getContacts().addAll(entity.getContacts());
-        return PersonMapper.INSTANCE.toDTO(personRepo.save(personFromDb));
     }
 }

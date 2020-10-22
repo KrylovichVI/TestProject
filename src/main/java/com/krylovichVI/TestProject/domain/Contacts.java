@@ -12,7 +12,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-
+/**
+ * Contacts class of entity
+ * @author Krylovich Vitaly
+ * @version 1.0
+ * */
 @Entity
 @Table
 @Data
