@@ -19,8 +19,8 @@
         },
         methods: {
             ...mapActions(['addContactAction']),
-            async save(){
-                await this.addContactAction({
+            save(){
+                this.addContactAction({
                     telephone: this.telephone,
                     personId: this.personId
                 })

@@ -16,14 +16,13 @@
 
 <script>
     import { mapActions } from 'vuex'
-    import contact from "../../api/contact";
     export default {
         name: "ContactItem",
         props: ['contact'],
         methods: {
             ...mapActions(['removeContactAction']),
             del(){
-                this.removeContactAction(contact)
+                this.removeContactAction(this.contact)
             }
         }
     }
